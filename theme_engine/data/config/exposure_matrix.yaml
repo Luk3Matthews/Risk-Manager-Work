@@ -1,0 +1,241 @@
+# =============================================================================
+# Exposure Matrix B  (Asset-Class × Macro Driver sensitivities)
+# =============================================================================
+# R_a = α_a + Σ_d (β_{a,d} * δ_d) + ε_a
+#
+# Sign convention:
+#   Positive β  → asset BENEFITS from an INCREASE in the driver
+#   Negative β  → asset SUFFERS from an INCREASE in the driver
+# =============================================================================
+
+asset_classes:
+  - international_equities
+  - australian_equities
+  - hedge_funds
+  - infrastructure
+  - property
+  - private_credit
+  - inflation_linked_bonds
+  - cash
+  - australian_bonds
+  - us_bonds
+  - aaa_overlay
+  - other_strategies
+
+macro_drivers:
+  - expected_growth
+  - expected_inflation
+  - real_rates
+  - equity_risk_premium
+  - credit_premium
+  - liquidity
+  - commodity_supply
+  - fx_risk_appetite
+  - policy_uncertainty
+
+# B[asset_class][driver] — 7 assets × 9 drivers
+# Values are RETURN sensitivities: β = expected return change (decimal)
+# per 1σ shock in the macro driver.  Calibrated so that a 1σ growth
+# shock ≈ +5 % for DM equities, etc.
+matrix:
+  international_equities:
+    expected_growth:      +0.050
+    expected_inflation:   -0.015
+    real_rates:           -0.020
+    equity_risk_premium:  -0.050
+    credit_premium:       -0.015
+    liquidity:            +0.015
+    commodity_supply:     +0.005
+    fx_risk_appetite:     +0.020
+    policy_uncertainty:   -0.020
+
+  australian_equities:
+    expected_growth:      +0.045
+    expected_inflation:   -0.010
+    real_rates:           -0.015
+    equity_risk_premium:  -0.045
+    credit_premium:       -0.010
+    liquidity:            +0.015
+    commodity_supply:     +0.015
+    fx_risk_appetite:     +0.005
+    policy_uncertainty:   -0.015
+
+  hedge_funds:
+    expected_growth:      +0.020
+    expected_inflation:   -0.005
+    real_rates:           -0.005
+    equity_risk_premium:  -0.020
+    credit_premium:       -0.010
+    liquidity:            +0.010
+    commodity_supply:     +0.005
+    fx_risk_appetite:     +0.010
+    policy_uncertainty:   -0.010
+
+  infrastructure:
+    expected_growth:      +0.025
+    expected_inflation:   +0.015
+    real_rates:           -0.020
+    equity_risk_premium:  -0.015
+    credit_premium:       -0.010
+    liquidity:            -0.015
+    commodity_supply:     +0.010
+    fx_risk_appetite:     +0.005
+    policy_uncertainty:   -0.010
+
+  property:
+    expected_growth:      +0.030
+    expected_inflation:   +0.010
+    real_rates:           -0.025
+    equity_risk_premium:  -0.015
+    credit_premium:       -0.010
+    liquidity:            -0.015
+    commodity_supply:     +0.005
+    fx_risk_appetite:     +0.005
+    policy_uncertainty:   -0.010
+
+  private_credit:
+    expected_growth:      +0.020
+    expected_inflation:   -0.010
+    real_rates:           -0.020
+    equity_risk_premium:  -0.015
+    credit_premium:       -0.050
+    liquidity:            +0.015
+    commodity_supply:     +0.000
+    fx_risk_appetite:     +0.005
+    policy_uncertainty:   -0.010
+
+  inflation_linked_bonds:
+    expected_growth:      -0.010
+    expected_inflation:   +0.030
+    real_rates:           -0.040
+    equity_risk_premium:  +0.005
+    credit_premium:       -0.005
+    liquidity:            +0.005
+    commodity_supply:     +0.005
+    fx_risk_appetite:     -0.005
+    policy_uncertainty:   +0.005
+
+  cash:
+    expected_growth:      +0.000
+    expected_inflation:   +0.005
+    real_rates:           +0.010
+    equity_risk_premium:  +0.000
+    credit_premium:       +0.000
+    liquidity:            -0.005
+    commodity_supply:     +0.000
+    fx_risk_appetite:     +0.000
+    policy_uncertainty:   +0.000
+
+  australian_bonds:
+    expected_growth:      -0.015
+    expected_inflation:   -0.035
+    real_rates:           -0.045
+    equity_risk_premium:  +0.005
+    credit_premium:       -0.005
+    liquidity:            +0.010
+    commodity_supply:     -0.005
+    fx_risk_appetite:     -0.005
+    policy_uncertainty:   +0.005
+
+  us_bonds:
+    expected_growth:      -0.015
+    expected_inflation:   -0.040
+    real_rates:           -0.050
+    equity_risk_premium:  +0.005
+    credit_premium:       -0.005
+    liquidity:            +0.010
+    commodity_supply:     -0.005
+    fx_risk_appetite:     -0.010
+    policy_uncertainty:   +0.005
+
+  aaa_overlay:
+    expected_growth:      +0.005
+    expected_inflation:   -0.005
+    real_rates:           -0.005
+    equity_risk_premium:  -0.005
+    credit_premium:       -0.005
+    liquidity:            +0.005
+    commodity_supply:     +0.000
+    fx_risk_appetite:     +0.005
+    policy_uncertainty:   -0.005
+
+  other_strategies:
+    expected_growth:      +0.015
+    expected_inflation:   +0.000
+    real_rates:           -0.005
+    equity_risk_premium:  -0.010
+    credit_premium:       -0.005
+    liquidity:            +0.005
+    commodity_supply:     +0.005
+    fx_risk_appetite:     +0.005
+    policy_uncertainty:   -0.005
+
+# Historical driver covariance matrix (annualised, for stressed cov estimation)
+# Symmetric 9×9 — only upper triangle shown, code mirrors
+driver_covariance:
+  expected_growth:
+    expected_growth: 1.00
+    expected_inflation: 0.30
+    real_rates: 0.20
+    equity_risk_premium: -0.50
+    credit_premium: -0.45
+    liquidity: 0.35
+    commodity_supply: 0.15
+    fx_risk_appetite: 0.40
+    policy_uncertainty: -0.25
+  expected_inflation:
+    expected_inflation: 1.00
+    real_rates: 0.40
+    equity_risk_premium: 0.10
+    credit_premium: 0.15
+    liquidity: -0.10
+    commodity_supply: 0.50
+    fx_risk_appetite: -0.05
+    policy_uncertainty: 0.20
+  real_rates:
+    real_rates: 1.00
+    equity_risk_premium: 0.05
+    credit_premium: 0.10
+    liquidity: -0.20
+    commodity_supply: 0.00
+    fx_risk_appetite: 0.10
+    policy_uncertainty: 0.15
+  equity_risk_premium:
+    equity_risk_premium: 1.00
+    credit_premium: 0.70
+    liquidity: -0.40
+    commodity_supply: 0.05
+    fx_risk_appetite: -0.55
+    policy_uncertainty: 0.45
+  credit_premium:
+    credit_premium: 1.00
+    liquidity: -0.35
+    commodity_supply: 0.00
+    fx_risk_appetite: -0.40
+    policy_uncertainty: 0.35
+  liquidity:
+    liquidity: 1.00
+    commodity_supply: 0.05
+    fx_risk_appetite: 0.50
+    policy_uncertainty: -0.30
+  commodity_supply:
+    commodity_supply: 1.00
+    fx_risk_appetite: 0.10
+    policy_uncertainty: 0.15
+  fx_risk_appetite:
+    fx_risk_appetite: 1.00
+    policy_uncertainty: -0.35
+  policy_uncertainty:
+    policy_uncertainty: 1.00
+
+# Historical driver volatilities (annualised σ in z-score units, for scaling)
+driver_volatilities:
+  expected_growth: 1.0
+  expected_inflation: 1.0
+  real_rates: 1.0
+  equity_risk_premium: 1.0
+  credit_premium: 1.0
+  liquidity: 1.0
+  commodity_supply: 1.0
+  fx_risk_appetite: 1.0
+  policy_uncertainty: 1.0

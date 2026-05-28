@@ -1,0 +1,125 @@
+# =============================================================================
+# Transmission Matrix T
+# =============================================================================
+# Maps theme categories to macro driver shock DIRECTIONS.
+# Rows = macro drivers, Columns = theme categories.
+# Values represent the typical directional sensitivity (signed, unit-free).
+# The analyst can OVERRIDE any entry at runtime.
+#
+# Sign convention:
+#   Positive = driver increases when the theme materialises
+#   Negative = driver decreases when the theme materialises
+# =============================================================================
+
+macro_drivers:
+  - expected_growth
+  - expected_inflation
+  - real_rates
+  - equity_risk_premium
+  - credit_premium
+  - liquidity
+  - commodity_supply
+  - fx_risk_appetite
+  - policy_uncertainty
+
+theme_categories:
+  - GEOPOLITICAL
+  - GROWTH
+  - INFLATION
+  - LIQUIDITY
+  - STRUCTURAL
+  - POLICY
+  - VALUATION
+  - CONTAGION
+
+# T[driver][category] — 9 drivers × 8 categories
+matrix:
+  expected_growth:
+    GEOPOLITICAL:  -0.5
+    GROWTH:        +1.0
+    INFLATION:     -0.3
+    LIQUIDITY:     +0.3
+    STRUCTURAL:    +0.4
+    POLICY:        +0.2
+    VALUATION:     +0.1
+    CONTAGION:     -0.8
+
+  expected_inflation:
+    GEOPOLITICAL:  +0.3
+    GROWTH:        +0.2
+    INFLATION:     +1.0
+    LIQUIDITY:     +0.1
+    STRUCTURAL:    +0.2
+    POLICY:        +0.3
+    VALUATION:     +0.0
+    CONTAGION:     -0.2
+
+  real_rates:
+    GEOPOLITICAL:  -0.2
+    GROWTH:        +0.3
+    INFLATION:     -0.4
+    LIQUIDITY:     -0.5
+    STRUCTURAL:    +0.1
+    POLICY:        +0.4
+    VALUATION:     +0.1
+    CONTAGION:     -0.3
+
+  equity_risk_premium:
+    GEOPOLITICAL:  +0.8
+    GROWTH:        -0.5
+    INFLATION:     +0.3
+    LIQUIDITY:     +0.4
+    STRUCTURAL:    -0.2
+    POLICY:        +0.3
+    VALUATION:     +0.6
+    CONTAGION:     +0.9
+
+  credit_premium:
+    GEOPOLITICAL:  +0.5
+    GROWTH:        -0.4
+    INFLATION:     +0.2
+    LIQUIDITY:     +0.6
+    STRUCTURAL:    -0.1
+    POLICY:        +0.2
+    VALUATION:     +0.3
+    CONTAGION:     +0.8
+
+  liquidity:
+    GEOPOLITICAL:  -0.3
+    GROWTH:        +0.2
+    INFLATION:     -0.1
+    LIQUIDITY:     +1.0
+    STRUCTURAL:    +0.1
+    POLICY:        +0.3
+    VALUATION:     +0.0
+    CONTAGION:     -0.7
+
+  commodity_supply:
+    GEOPOLITICAL:  +0.7
+    GROWTH:        +0.2
+    INFLATION:     +0.5
+    LIQUIDITY:     +0.0
+    STRUCTURAL:    +0.3
+    POLICY:        +0.1
+    VALUATION:     +0.0
+    CONTAGION:     -0.2
+
+  fx_risk_appetite:
+    GEOPOLITICAL:  -0.4
+    GROWTH:        +0.3
+    INFLATION:     -0.2
+    LIQUIDITY:     +0.3
+    STRUCTURAL:    +0.1
+    POLICY:        -0.2
+    VALUATION:     +0.1
+    CONTAGION:     -0.6
+
+  policy_uncertainty:
+    GEOPOLITICAL:  +0.7
+    GROWTH:        -0.1
+    INFLATION:     +0.2
+    LIQUIDITY:     +0.2
+    STRUCTURAL:    +0.3
+    POLICY:        +0.9
+    VALUATION:     +0.1
+    CONTAGION:     +0.5

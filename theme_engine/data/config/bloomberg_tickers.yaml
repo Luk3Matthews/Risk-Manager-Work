@@ -1,0 +1,217 @@
+# =============================================================================
+# Bloomberg Ticker Mappings for Theme Engine Indicators
+# =============================================================================
+# Maps each engine indicator name to its Bloomberg ticker, field, and
+# any transformations needed.
+#
+# field: the BLPAPI field to request (PX_LAST, YLD_YTM_MID, etc.)
+# transform: optional post-processing
+#   - none: use raw value
+#   - spread: compute HY - IG spread (requires secondary ticker)
+#   - diff: compute ticker1 - ticker2
+#   - invert: multiply by -1 (for sentiment inversion)
+# =============================================================================
+
+indicators:
+
+  # ---- FAMILY 1: MARKET RISK ----
+  VIX:
+    ticker: "VIX Index"
+    field: PX_LAST
+
+  MOVE:
+    ticker: "MOVE Index"
+    field: PX_LAST
+
+  CVIX:
+    ticker: "CVIX Index"
+    field: PX_LAST
+
+  CDX_IG:
+    ticker: "CDX IG CDSI GEN 5Y CORP"
+    field: PX_LAST
+    fallback_ticker: "IBOXIG Index"
+
+  CDX_HY:
+    ticker: "CDX HY CDSI GEN 5Y CORP"
+    field: PX_LAST
+    fallback_ticker: "IBOXHY Index"
+
+  HY_minus_IG:
+    transform: spread
+    ticker_long: "CDX HY CDSI GEN 5Y CORP"
+    ticker_short: "CDX IG CDSI GEN 5Y CORP"
+    field: PX_LAST
+    fallback_ticker_long: "IBOXHY Index"
+    fallback_ticker_short: "IBOXIG Index"
+
+  Turbulence:
+    # Mahalanobis distance — computed from multi-asset returns
+    # Use CBOE Turbulence proxy or compute from SPX / UST / Gold returns
+    ticker: "VIX Index"
+    field: PX_LAST
+    transform: turbulence_proxy
+    secondary_tickers:
+      - "SPX Index"
+      - "USGG10YR Index"
+      - "XAU Curncy"
+    note: "Computed as normalised cross-asset Mahalanobis distance"
+
+  Systemic_Risk:
+    # OFR Systemic Risk or SRISK — use Cleveland Fed Financial Stress
+    ticker: "CFSIFSI Index"
+    field: PX_LAST
+    fallback_ticker: "GFSI Index"
+
+  FinStress:
+    # OFR Financial Stress Index
+    ticker: "OFSFSI Index"
+    field: PX_LAST
+    fallback_ticker: "NFCIINDX Index"
+
+  # ---- FAMILY 2: GEOPOLITICAL RISK ----
+  GPRD:
+    # Caldara & Iacoviello GPR Daily index
+    ticker: "GPRDAILY Index"
+    field: PX_LAST
+    fallback_ticker: "BCOMGPR Index"
+    note: "If unavailable, load from CSV (Matteo Iacoviello website)"
+
+  GPRD_MA30:
+    # 30-day moving average of GPR — computed from GPRD
+    ticker: "GPRDAILY Index"
+    field: PX_LAST
+    transform: ma30
+
+  Brent_Crude:
+    ticker: "CO1 Comdty"
+    field: PX_LAST
+
+  Gold:
+    ticker: "XAU Curncy"
+    field: PX_LAST
+
+  Oil_ImpliedVol:
+    ticker: "OVXCLS Index"
+    field: PX_LAST
+    fallback_ticker: "CO1 Comdty"
+    fallback_field: "30DAY_IMPVOL_100.0%MNY_DF"
+
+  Gold_ImpliedVol:
+    ticker: "GVZ Index"
+    field: PX_LAST
+    fallback_ticker: "GC1 Comdty"
+    fallback_field: "30DAY_IMPVOL_100.0%MNY_DF"
+
+  TPU:
+    # Trade Policy Uncertainty — Baker Bloom Davis
+    ticker: "EPUCTPU Index"
+    field: PX_LAST
+    note: "Monthly frequency — forward-fill to daily"
+
+  # ---- FAMILY 3: EXPECTED MARKET DIRECTION ----
+  CBOE_Skew:
+    ticker: "SKEW Index"
+    field: PX_LAST
+
+  SPX_PutCall:
+    ticker: "PCUSEQTR Index"
+    field: PX_LAST
+    fallback_ticker: "PCUSOEQT Index"
+
+  AAII_BearBull:
+    # Inverted AAII Bull-Bear spread (higher = more bearish)
+    ticker: "AAIIBULL Index"
+    field: PX_LAST
+    transform: aaii_invert
+    secondary_tickers:
+      - "AAIIBEAR Index"
+    note: "Bear - Bull spread; weekly frequency, forward-fill"
+
+  # ---- FAMILY 4: MARKET STRUCTURE ----
+  Yield_2s10s:
+    ticker: "USYC2Y10 Index"
+    field: PX_LAST
+    fallback_transform: diff
+    fallback_ticker_long: "USGG10YR Index"
+    fallback_ticker_short: "USGG2YR Index"
+
+  Yield_3m10y:
+    ticker: "USYC3M10 Index"
+    field: PX_LAST
+    fallback_transform: diff
+    fallback_ticker_long: "USGG10YR Index"
+    fallback_ticker_short: "GB3 Govt"
+
+  ERP_Level:
+    # Equity risk premium: S&P earnings yield minus 10Y real yield
+    transform: erp
+    ticker_earnings: "SPX Index"
+    field_earnings: BEST_PE_RATIO
+    ticker_real_yield: "USGGT10Y Index"
+    field_real_yield: PX_LAST
+    note: "ERP = (1/PE) - real_yield / 100"
+
+  VIX_TermStructure:
+    # VIX - VIX3M: positive = backwardation = near-term stress
+    transform: diff
+    ticker_long: "VIX Index"
+    ticker_short: "VIX3M Index"
+    field: PX_LAST
+
+  Implied_Correlation:
+    ticker: "ICJ Index"
+    field: PX_LAST
+    fallback_ticker: "KCJ Index"
+
+  # ---- FAMILY 5: EQUITY VALUATION ----
+  PE_Ratio:
+    ticker: "SPX Index"
+    field: BEST_PE_RATIO
+
+  EV_EBITDA:
+    ticker: "SPX Index"
+    field: BEST_EV_TO_BEST_EBITDA
+
+  PB_Ratio:
+    ticker: "SPX Index"
+    field: PX_TO_BOOK_RATIO
+
+  PCF_Ratio:
+    ticker: "SPX Index"
+    field: PX_TO_CASH_FLOW
+
+  PS_Ratio:
+    ticker: "SPX Index"
+    field: PX_TO_SALES_RATIO
+
+  CAPE:
+    # Shiller CAPE — use Robert Shiller data or Bloomberg proxy
+    ticker: "SPXSPCPE Index"
+    field: PX_LAST
+    fallback_ticker: "SPX Index"
+    fallback_field: TRAIL_12M_PE_RATIO
+    note: "True CAPE may need CSV from multpl.com or Shiller dataset"
+
+  Tobin_Q:
+    # Market cap / net worth — use Fed Z.1 data or proxy
+    ticker: "SPX Index"
+    field: PX_TO_BOOK_RATIO
+    transform: tobin_proxy
+    note: "Proxy via P/B; true Tobin Q from Fed Flow of Funds"
+
+  Buffett_Indicator:
+    # Total market cap / GDP — Wilshire 5000 / GDP
+    transform: buffett
+    ticker_mktcap: "WLSH5000 Index"
+    field_mktcap: PX_LAST
+    ticker_gdp: "GDP CUR$ Index"
+    field_gdp: PX_LAST
+    note: "Quarterly GDP forward-filled; ratio x 100"
+
+# Historical data request defaults
+defaults:
+  lookback_years: 7
+  periodicity: DAILY
+  non_trading_day_fill: PREVIOUS_VALUE
+  currency: USD

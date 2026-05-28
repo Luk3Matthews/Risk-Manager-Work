@@ -1,0 +1,14 @@
+# VFMC News & Macro Risk Monitor — Dependencies
+# Core
+requests>=2.31.0
+pyyaml>=6.0
+streamlit>=1.30.0
+
+# Database
+# SQLite is built-in; no extra package needed
+
+# Optional: Bloomberg DAPI (install separately if available)
+# blpapi>=3.19.0
+
+# Optional: DuckDB as alternative to SQLite
+# duckdb>=0.9.0

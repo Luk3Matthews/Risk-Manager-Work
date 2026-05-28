@@ -1,0 +1,51 @@
+## News Monitor Configuration
+
+ingestion:
+  poll_interval_minutes: 10
+  enabled: true
+  max_articles_per_query: 20
+
+queries:
+  - "Strait of Hormuz oil"
+  - "Iran sanctions oil"
+  - "oil supply disruption"
+  - "OPEC production cut"
+  - "inflation expectations rising"
+  - "CPI surprise"
+  - "bond selloff yields"
+  - "Fed rate hike"
+  - "ECB rate decision"
+  - "RBA rate decision"
+  - "credit spread widening"
+  - "high yield default"
+  - "USD dollar strength"
+  - "AUD currency"
+  - "China growth slowdown"
+  - "US recession risk"
+  - "liquidity crisis"
+  - "VIX volatility spike"
+  - "emerging markets outflow"
+  - "sovereign debt crisis"
+
+sources:
+  bing:
+    enabled: true
+    endpoint: "https://api.bing.microsoft.com/v7.0/news/search"
+    key_env_var: "BING_NEWS_KEY"
+    reliability_weight: 0.8
+  gdelt:
+    enabled: true
+    endpoint: "https://api.gdeltproject.org/api/v2/doc/doc"
+    reliability_weight: 0.6
+
+bloomberg:
+  enabled: false
+  host: "localhost"
+  port: 8194
+
+database:
+  path: "news_monitor.db"
+
+ui:
+  port: 8501
+  title: "VFMC News & Macro Risk Monitor"

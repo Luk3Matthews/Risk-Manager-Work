@@ -1,0 +1,636 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# TAXONOMY & MACRO FACTOR MAPPING
+# Defines themes, macro factors, keyword rules, and Bloomberg ticker mappings
+# ═══════════════════════════════════════════════════════════════════════════════
+
+themes:
+  Geopolitics:
+    description: "Wars, sanctions, territorial disputes, political instability"
+    keywords:
+      - "war"
+      - "sanctions"
+      - "military"
+      - "invasion"
+      - "conflict"
+      - "geopolitical"
+      - "tensions"
+      - "missile"
+      - "nuclear"
+      - "blockade"
+      - "strait"
+      - "coup"
+      - "regime"
+      - "territorial"
+    phrases:
+      - "trade war"
+      - "arms race"
+      - "regime change"
+      - "proxy war"
+      - "diplomatic crisis"
+      - "Strait of Hormuz"
+      - "South China Sea"
+      - "Taiwan Strait"
+
+  Energy:
+    description: "Oil, gas, renewables supply/demand, OPEC decisions"
+    keywords:
+      - "oil"
+      - "crude"
+      - "brent"
+      - "WTI"
+      - "OPEC"
+      - "petroleum"
+      - "natural gas"
+      - "LNG"
+      - "pipeline"
+      - "refinery"
+      - "shale"
+      - "drilling"
+      - "barrel"
+      - "energy"
+    phrases:
+      - "production cut"
+      - "supply disruption"
+      - "oil embargo"
+      - "energy crisis"
+      - "spare capacity"
+      - "strategic reserve"
+      - "oil price"
+      - "fuel shortage"
+
+  Inflation:
+    description: "Consumer/producer prices, wage growth, cost pressures"
+    keywords:
+      - "inflation"
+      - "CPI"
+      - "PPI"
+      - "deflation"
+      - "disinflation"
+      - "stagflation"
+      - "prices"
+      - "wage"
+      - "cost"
+      - "tariff"
+    phrases:
+      - "consumer prices"
+      - "price pressures"
+      - "wage growth"
+      - "cost of living"
+      - "inflation expectations"
+      - "core inflation"
+      - "sticky inflation"
+      - "price spiral"
+      - "inflation surprise"
+
+  Rates:
+    description: "Central bank policy, bond yields, rate expectations"
+    keywords:
+      - "rate"
+      - "yield"
+      - "bond"
+      - "treasury"
+      - "gilt"
+      - "bund"
+      - "hike"
+      - "cut"
+      - "dovish"
+      - "hawkish"
+      - "tightening"
+      - "easing"
+      - "QE"
+      - "QT"
+    phrases:
+      - "rate hike"
+      - "rate cut"
+      - "interest rate"
+      - "yield curve"
+      - "inverted curve"
+      - "bond selloff"
+      - "quantitative easing"
+      - "quantitative tightening"
+      - "forward guidance"
+      - "terminal rate"
+      - "neutral rate"
+
+  Credit:
+    description: "Corporate credit, defaults, spreads, leveraged lending"
+    keywords:
+      - "default"
+      - "downgrade"
+      - "restructuring"
+      - "bankruptcy"
+      - "leverage"
+      - "covenant"
+      - "junk"
+      - "distressed"
+      - "spread"
+    phrases:
+      - "credit spread"
+      - "high yield"
+      - "investment grade"
+      - "credit crunch"
+      - "loan default"
+      - "corporate debt"
+      - "spread widening"
+      - "credit risk"
+
+  FX:
+    description: "Currency markets, capital flows, FX intervention"
+    keywords:
+      - "dollar"
+      - "euro"
+      - "yen"
+      - "yuan"
+      - "sterling"
+      - "AUD"
+      - "currency"
+      - "forex"
+      - "FX"
+      - "devaluation"
+      - "appreciation"
+    phrases:
+      - "currency war"
+      - "capital flight"
+      - "FX intervention"
+      - "dollar strength"
+      - "dollar weakness"
+      - "carry trade"
+      - "exchange rate"
+
+  Liquidity:
+    description: "Market liquidity, funding markets, repo, central bank balance sheets"
+    keywords:
+      - "liquidity"
+      - "repo"
+      - "funding"
+      - "margin"
+      - "collateral"
+      - "reserves"
+      - "redemption"
+    phrases:
+      - "liquidity crisis"
+      - "margin call"
+      - "bank run"
+      - "funding stress"
+      - "balance sheet"
+      - "reserve drain"
+      - "flash crash"
+      - "market seizure"
+
+  Growth:
+    description: "Economic growth, recession risk, employment, PMI"
+    keywords:
+      - "GDP"
+      - "growth"
+      - "recession"
+      - "employment"
+      - "unemployment"
+      - "PMI"
+      - "manufacturing"
+      - "services"
+      - "output"
+      - "slowdown"
+      - "expansion"
+    phrases:
+      - "economic growth"
+      - "hard landing"
+      - "soft landing"
+      - "labour market"
+      - "job losses"
+      - "growth scare"
+      - "recession risk"
+      - "GDP contraction"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MACRO FACTORS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+macro_factors:
+  Inflation:
+    themes: [Inflation, Energy]
+    description: "Realized and expected inflation trajectory"
+  Growth:
+    themes: [Growth]
+    description: "Economic growth outlook"
+  Rates:
+    themes: [Rates]
+    description: "Interest rate level and path"
+  CreditSpreads:
+    themes: [Credit, Liquidity]
+    description: "Corporate credit risk premium"
+  FX:
+    themes: [FX, Geopolitics]
+    description: "Currency valuations and flows"
+  Liquidity:
+    themes: [Liquidity]
+    description: "Market and funding liquidity"
+  CommoditySupply:
+    themes: [Energy, Geopolitics]
+    description: "Physical commodity availability"
+  Policy:
+    themes: [Rates, Growth]
+    description: "Fiscal and monetary policy stance"
+  Geopolitics:
+    themes: [Geopolitics]
+    description: "Political risk and conflict"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# THEME -> FACTOR MAPPING RULES
+# direction: up/down/neutral
+# horizon: short (0-6m), medium (6-12m), long (12-24m), structural (24m+)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+mapping_rules:
+  - trigger_theme: Energy
+    trigger_direction: up
+    maps_to:
+      - factor: Inflation
+        direction: up
+        confidence_boost: 0.2
+      - factor: CommoditySupply
+        direction: down
+        confidence_boost: 0.3
+      - factor: Growth
+        direction: down
+        confidence_boost: 0.1
+    typical_horizon: short
+    affected_asset_classes: [IEQ, AEQ, FI, Alternatives]
+
+  - trigger_theme: Inflation
+    trigger_direction: up
+    maps_to:
+      - factor: Inflation
+        direction: up
+        confidence_boost: 0.3
+      - factor: Rates
+        direction: up
+        confidence_boost: 0.2
+      - factor: Growth
+        direction: down
+        confidence_boost: 0.1
+    typical_horizon: short
+    affected_asset_classes: [FI, AEQ, IEQ, Property]
+
+  - trigger_theme: Rates
+    trigger_direction: up
+    maps_to:
+      - factor: Rates
+        direction: up
+        confidence_boost: 0.3
+      - factor: Growth
+        direction: down
+        confidence_boost: 0.15
+      - factor: CreditSpreads
+        direction: up
+        confidence_boost: 0.1
+    typical_horizon: medium
+    affected_asset_classes: [FI, Property, AEQ, IEQ, Credit]
+
+  - trigger_theme: Credit
+    trigger_direction: up
+    maps_to:
+      - factor: CreditSpreads
+        direction: up
+        confidence_boost: 0.3
+      - factor: Growth
+        direction: down
+        confidence_boost: 0.15
+      - factor: Liquidity
+        direction: down
+        confidence_boost: 0.1
+    typical_horizon: short
+    affected_asset_classes: [Credit, IEQ, AEQ]
+
+  - trigger_theme: Geopolitics
+    trigger_direction: up
+    maps_to:
+      - factor: Geopolitics
+        direction: up
+        confidence_boost: 0.3
+      - factor: CommoditySupply
+        direction: down
+        confidence_boost: 0.2
+      - factor: FX
+        direction: up
+        confidence_boost: 0.1
+    typical_horizon: short
+    affected_asset_classes: [IEQ, AEQ, Alternatives, FX]
+
+  - trigger_theme: Liquidity
+    trigger_direction: down
+    maps_to:
+      - factor: Liquidity
+        direction: down
+        confidence_boost: 0.3
+      - factor: CreditSpreads
+        direction: up
+        confidence_boost: 0.2
+      - factor: Growth
+        direction: down
+        confidence_boost: 0.1
+    typical_horizon: short
+    affected_asset_classes: [AEQ, IEQ, Credit, Alternatives]
+
+  - trigger_theme: Growth
+    trigger_direction: down
+    maps_to:
+      - factor: Growth
+        direction: down
+        confidence_boost: 0.3
+      - factor: CreditSpreads
+        direction: up
+        confidence_boost: 0.15
+      - factor: Rates
+        direction: down
+        confidence_boost: 0.1
+    typical_horizon: medium
+    affected_asset_classes: [AEQ, IEQ, Credit, Property]
+
+  - trigger_theme: FX
+    trigger_direction: up
+    maps_to:
+      - factor: FX
+        direction: up
+        confidence_boost: 0.3
+    typical_horizon: short
+    affected_asset_classes: [IEQ, FX, Alternatives]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENTITY RECOGNITION LISTS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+entities:
+  central_banks:
+    - name: "Federal Reserve"
+      aliases: ["Fed", "FOMC", "Powell", "Federal Reserve"]
+      region: US
+    - name: "ECB"
+      aliases: ["ECB", "European Central Bank", "Lagarde"]
+      region: EU
+    - name: "RBA"
+      aliases: ["RBA", "Reserve Bank of Australia", "Bullock"]
+      region: AU
+    - name: "BOE"
+      aliases: ["Bank of England", "BOE", "Bailey"]
+      region: UK
+    - name: "BOJ"
+      aliases: ["Bank of Japan", "BOJ", "Ueda"]
+      region: JP
+    - name: "PBOC"
+      aliases: ["PBOC", "People's Bank of China"]
+      region: CN
+
+  countries:
+    - name: "United States"
+      aliases: ["US", "USA", "United States", "American"]
+    - name: "China"
+      aliases: ["China", "Chinese", "Beijing", "PRC"]
+    - name: "Australia"
+      aliases: ["Australia", "Australian"]
+    - name: "Japan"
+      aliases: ["Japan", "Japanese", "Tokyo"]
+    - name: "United Kingdom"
+      aliases: ["UK", "Britain", "British"]
+    - name: "Germany"
+      aliases: ["Germany", "German", "Berlin"]
+    - name: "Iran"
+      aliases: ["Iran", "Iranian", "Tehran"]
+    - name: "Russia"
+      aliases: ["Russia", "Russian", "Moscow", "Kremlin"]
+    - name: "Saudi Arabia"
+      aliases: ["Saudi", "Saudi Arabia", "Riyadh"]
+
+  commodities:
+    - name: "Crude Oil"
+      aliases: ["oil", "crude", "Brent", "WTI", "petroleum"]
+    - name: "Natural Gas"
+      aliases: ["natural gas", "LNG", "gas"]
+    - name: "Gold"
+      aliases: ["gold", "bullion"]
+    - name: "Iron Ore"
+      aliases: ["iron ore"]
+    - name: "Copper"
+      aliases: ["copper"]
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# BLOOMBERG TICKER MAPPINGS
+# Maps macro factors + themes to relevant Bloomberg tickers for market confirmation
+# ═══════════════════════════════════════════════════════════════════════════════
+
+bloomberg_tickers:
+  # Equity indices
+  equity:
+    - ticker: "SPX Index"
+      name: "S&P 500"
+      themes: [Growth, Liquidity, Rates]
+      factor: Growth
+      direction_confirms: "price_up = growth_up"
+    - ticker: "AS51 Index"
+      name: "ASX 200"
+      themes: [Growth, Energy, FX]
+      factor: Growth
+      direction_confirms: "price_up = growth_up"
+    - ticker: "MXWO Index"
+      name: "MSCI World"
+      themes: [Growth, Geopolitics]
+      factor: Growth
+      direction_confirms: "price_up = growth_up"
+    - ticker: "MXEF Index"
+      name: "MSCI EM"
+      themes: [Growth, Geopolitics, FX]
+      factor: Growth
+      direction_confirms: "price_up = growth_up"
+    - ticker: "VIX Index"
+      name: "VIX"
+      themes: [Liquidity, Geopolitics, Credit]
+      factor: Liquidity
+      direction_confirms: "price_up = liquidity_down"
+
+  # Rates / bonds
+  rates:
+    - ticker: "USGG10YR Index"
+      name: "US 10Y Treasury Yield"
+      themes: [Rates, Inflation, Growth]
+      factor: Rates
+      direction_confirms: "yield_up = rates_up"
+    - ticker: "USGG2YR Index"
+      name: "US 2Y Treasury Yield"
+      themes: [Rates, Policy]
+      factor: Policy
+      direction_confirms: "yield_up = hawkish"
+    - ticker: "GACGB10 Index"
+      name: "AU 10Y Govt Bond Yield"
+      themes: [Rates, Inflation]
+      factor: Rates
+      direction_confirms: "yield_up = rates_up"
+    - ticker: "GDBR10 Index"
+      name: "German 10Y Bund Yield"
+      themes: [Rates]
+      factor: Rates
+      direction_confirms: "yield_up = rates_up"
+    - ticker: "USYC2Y10 Index"
+      name: "US 2s10s Curve"
+      themes: [Growth, Rates]
+      factor: Growth
+      direction_confirms: "steeper = growth_up"
+
+  # Credit
+  credit:
+    - ticker: "CDX IG CDSI GEN 5Y Corp"
+      name: "CDX IG 5Y"
+      themes: [Credit, Liquidity]
+      factor: CreditSpreads
+      direction_confirms: "spread_up = credit_stress"
+    - ticker: "CDX HY CDSI GEN 5Y Corp"
+      name: "CDX HY 5Y"
+      themes: [Credit, Liquidity, Growth]
+      factor: CreditSpreads
+      direction_confirms: "spread_up = credit_stress"
+    - ticker: "ITRX EUR CDSI GEN 5Y Corp"
+      name: "iTraxx Europe 5Y"
+      themes: [Credit]
+      factor: CreditSpreads
+      direction_confirms: "spread_up = credit_stress"
+
+  # FX
+  fx:
+    - ticker: "DXY Curncy"
+      name: "US Dollar Index"
+      themes: [FX, Geopolitics]
+      factor: FX
+      direction_confirms: "price_up = USD_strong"
+    - ticker: "AUDUSD Curncy"
+      name: "AUD/USD"
+      themes: [FX, Growth, Energy]
+      factor: FX
+      direction_confirms: "price_up = risk_on"
+    - ticker: "EURUSD Curncy"
+      name: "EUR/USD"
+      themes: [FX]
+      factor: FX
+      direction_confirms: "price_up = USD_weak"
+    - ticker: "USDJPY Curncy"
+      name: "USD/JPY"
+      themes: [FX, Rates]
+      factor: FX
+      direction_confirms: "price_up = USD_strong_vs_JPY"
+
+  # Commodities
+  commodities:
+    - ticker: "CL1 Comdty"
+      name: "WTI Crude Oil Front Month"
+      themes: [Energy, Geopolitics, Inflation]
+      factor: CommoditySupply
+      direction_confirms: "price_up = supply_tight"
+    - ticker: "CO1 Comdty"
+      name: "Brent Crude Front Month"
+      themes: [Energy, Geopolitics, Inflation]
+      factor: CommoditySupply
+      direction_confirms: "price_up = supply_tight"
+    - ticker: "XAU Curncy"
+      name: "Gold"
+      themes: [Geopolitics, Inflation, FX]
+      factor: Geopolitics
+      direction_confirms: "price_up = risk_off"
+    - ticker: "SCOA Comdty"
+      name: "Iron Ore (SGX)"
+      themes: [Growth, Energy]
+      factor: Growth
+      direction_confirms: "price_up = china_demand"
+    - ticker: "HG1 Comdty"
+      name: "Copper"
+      themes: [Growth]
+      factor: Growth
+      direction_confirms: "price_up = growth_up"
+
+  # Inflation
+  inflation:
+    - ticker: "USGGBE10 Index"
+      name: "US 10Y Breakeven Inflation"
+      themes: [Inflation]
+      factor: Inflation
+      direction_confirms: "rate_up = inflation_expected"
+    - ticker: "USGGBE05 Index"
+      name: "US 5Y Breakeven Inflation"
+      themes: [Inflation]
+      factor: Inflation
+      direction_confirms: "rate_up = inflation_expected"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DIRECTION SIGNALS
+# Keywords that indicate directional bias in article text
+# ═══════════════════════════════════════════════════════════════════════════════
+
+direction_signals:
+  up:
+    - "surge"
+    - "soar"
+    - "spike"
+    - "jump"
+    - "rise"
+    - "rally"
+    - "climb"
+    - "increase"
+    - "higher"
+    - "escalate"
+    - "accelerate"
+    - "overshoot"
+    - "breakout"
+    - "widening"
+    - "tighten"
+    - "hawkish"
+    - "hike"
+  down:
+    - "crash"
+    - "plunge"
+    - "slump"
+    - "fall"
+    - "drop"
+    - "decline"
+    - "collapse"
+    - "tumble"
+    - "lower"
+    - "decelerate"
+    - "ease"
+    - "dovish"
+    - "cut"
+    - "shrink"
+    - "contraction"
+    - "narrowing"
+  neutral:
+    - "steady"
+    - "unchanged"
+    - "stable"
+    - "hold"
+    - "pause"
+    - "mixed"
+    - "flat"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# HORIZON SIGNALS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+horizon_signals:
+  short:  # 0-6 months
+    - "immediate"
+    - "today"
+    - "this week"
+    - "near-term"
+    - "imminent"
+    - "next month"
+    - "Q1"
+    - "Q2"
+    - "Q3"
+    - "Q4"
+  medium:  # 6-12 months
+    - "next year"
+    - "2027"
+    - "medium-term"
+    - "outlook"
+    - "forecast"
+  long:  # 12-24 months
+    - "long-term"
+    - "structural"
+    - "multi-year"
+    - "secular"
+    - "decade"

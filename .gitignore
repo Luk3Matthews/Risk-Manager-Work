@@ -1,0 +1,57 @@
+# ── Python ──────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── Virtual environments ─────────────────────────────────────────────
+.venv/
+venv/
+env/
+virtual_risks_information_funnel/
+
+# ── Jupyter ─────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+
+# ── Sensitive / confidential data ───────────────────────────────────
+# VFMC client data files — NEVER commit these
+*.xlsx
+*.xls
+*.csv
+*.json
+*.db
+*.sqlite
+*.sqlite3
+
+# Output files generated at runtime
+outputs/
+
+# Bloomberg cache (contains live market data snapshots)
+theme_engine/data/cache/
+
+# ── Secrets / credentials ────────────────────────────────────────────
+.env
+.env.*
+*.pem
+*.key
+secrets.yaml
+secrets.yml
+config.local.yaml
+
+# ── OS / IDE ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ── VS Code workspace ────────────────────────────────────────────────
+# Keep: .vscode/settings.json (useful shared settings)
+# Exclude: personal/machine-specific VS Code files
+.vscode/launch.json
+.vscode/tasks.json
