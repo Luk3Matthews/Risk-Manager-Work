@@ -1186,15 +1186,31 @@ def _cached_load_client_positions():
 
 
 def _render_vfmc_composition():
-    """Show the actual VFMC portfolio composition from BNY Data Vault."""
+    """Show the actual VFMC portfolio composition from BNY Data Vault.
+    
+    This requires VFMCDataLayer (VFMC-internal package).
+    Non-VFMC users will see a helpful info message instead.
+    """
     st.markdown("### 🏛️ VFMC Portfolio Composition (BNY Data Vault)")
 
     try:
         from theme_engine.vfmc_portfolio import load_portfolio, load_client_positions
         positions = _cached_load_portfolio()
         client_positions = _cached_load_client_positions()
+    except ImportError as e:
+        if "VFMCDataLayer" in str(e):
+            st.info(
+                "**BNY Data Vault Integration** — Not available in this environment.\n\n"
+                "This section requires `VFMCDataLayer`, which is an internal VFMC package. "
+                "It's only available within VFMC's internal network.\n\n"
+                "- **VFMC Users:** Contact IT to enable package access on your machine.\n"
+                "- **External Users:** This is expected; the dashboard still works with live news themes and indicators."
+            )
+        else:
+            st.info(f"BNY Data Vault not available: {e}")
+        return
     except Exception as exc:
-        st.info(f"BNY Data Vault not available: {exc}")
+        st.info(f"BNY Data Vault error: {exc}")
         return
 
     total_exp = sum(p.exposure_aud for p in positions)

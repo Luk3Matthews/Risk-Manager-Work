@@ -1,0 +1,45 @@
+# Emerging Risks Information Funnel — Root Dependencies
+# This file aggregates all requirements for the full application.
+# 
+# For local development with Bloomberg live data:
+#   pip install -r requirements.txt
+#
+# For deployment without Bloomberg:
+#   pip install -r requirements.txt --ignore-installed xbbg
+#
+# Individual submodules also have requirements.txt files:
+#   - theme_engine/requirements.txt (core macro engine)
+#   - news_monitor/requirements.txt (news ingestion)
+
+# ── Core Data & Scientific ──────────────────────────────────────────
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+scikit-learn>=1.3
+pydantic>=2.0
+
+# ── Dashboard & Web UI ──────────────────────────────────────────────
+streamlit>=1.40
+
+# ── Data Formats & Config ──────────────────────────────────────────
+PyYAML>=6.0
+openpyxl>=3.1
+
+# ── Bloomberg Data (optional) ───────────────────────────────────────
+# xbbg>=1.2.0
+# 
+# Note: Bloomberg functionality requires:
+#   1. Bloomberg Terminal running locally (Port 8194 by default)
+#   2. xbbg Python package installed
+#   3. Environment variable BLPAPI_ROOT set (or xbbg will auto-detect)
+# 
+# If you have Bloomberg Terminal, uncomment the line above and install:
+#   pip install xbbg
+
+# ── Testing ────────────────────────────────────────────────────────
+pytest>=7.0
+
+# ── VFMC-Specific (internal only) ──────────────────────────────────
+# VFMCDataLayer is an internal package that queries the BNY Data Vault.
+# It is ONLY available within VFMC's internal network/package registry.
+# External users will see import warnings but the app will still run.

@@ -111,10 +111,21 @@ def _query_all_clients(
 
     Results are cached per effective_date so that load_portfolio() and
     load_client_positions() don't duplicate the same 6 SQL queries.
+
+    NOTE: This function requires VFMCDataLayer, which is VFMC-internal only.
+    Non-VFMC users will get a helpful error message.
     """
     global _bny_cache, _bny_cache_date
 
-    from VFMCDataLayer import Environment, BNYDataVault
+    try:
+        from VFMCDataLayer import Environment, BNYDataVault
+    except ImportError:
+        raise ImportError(
+            "VFMCDataLayer not found. This is an internal VFMC package.\n"
+            "BNY Data Vault integration only works within VFMC's internal network.\n"
+            "For external use, the dashboard will skip the Portfolio tab or use sample data.\n"
+            "Contact VFMC IT if you need access to the Data Layer."
+        )
 
     if effective_date is None:
         effective_date = _find_effective_date()
